@@ -1,0 +1,55 @@
+@startuml ACO+遗传算法流程图
+title ACO + 遗传算法（GA）流程
+
+skinparam backgroundColor #FEFEFE
+skinparam activityBackgroundColor #E8F4FD
+skinparam activityBorderColor #4A90D9
+skinparam activityDiamondBackgroundColor #FFE4B5
+
+start
+
+:初始化参数;
+
+:iteration = 1;
+
+repeat
+
+  :蚁群构建n条路径;
+
+  #LightGreen:遗传算法增强;
+  note right
+    ┌─────────────────────┐
+    │ 1. 选择（锦标赛）   │
+    │    随机选3条→取最优 │
+    │                     │
+    │ 2. 交叉（OX，85%）  │
+    │    P1: [1 2 3 4 5]  │
+    │    P2: [3 5 2 1 4]  │
+    │    Child: [1 2 3 5 4]│
+    │                     │
+    │ 3. 变异（15%）      │
+    │    交换/逆转变异    │
+    │                     │
+    │ 4. 精英保留（25%）  │
+    └─────────────────────┘
+  end note
+
+  if (当前最优 < 全局最优?) then (是)
+    :更新全局最优解;
+  else (否)
+  endif
+
+  :信息素更新;
+
+  :记录收敛数据;
+
+  :iteration++;
+
+repeat while (iteration < max_iter?) is (是)
+->否;
+
+:输出结果;
+
+stop
+
+@enduml

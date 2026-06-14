@@ -1,0 +1,99 @@
+@startuml 遗传算法详细流程图
+title 遗传算法（GA）详细流程
+
+skinparam backgroundColor #FEFEFE
+skinparam defaultFontSize 11
+skinparam activityBackgroundColor #E8F8E8
+skinparam activityBorderColor #2E8B57
+skinparam activityDiamondBackgroundColor #FFE4B5
+
+start
+
+:输入：蚁群生成的n条路径;
+
+:计算每条路径的适应度;
+note right
+  fitness = 1 / distance
+  距离越短 → 适应度越高
+end note
+
+:按距离排序;
+
+#LightGreen:精英保留（前25%）;
+note right
+  直接复制到下一代
+  确保最优解不丢失
+end note
+
+:新种群 = 精英路径;
+
+:生成剩余个体;
+
+repeat
+
+  :选择父代;
+  note right
+    锦标赛选择（规模=3）
+    ┌─────────────────┐
+    │ 随机选3条路径   │
+    │ ↓               │
+    │ 取距离最短的1条 │
+    │ ↓               │
+    │ 作为父代        │
+    └─────────────────┘
+  end note
+
+  if (随机数 < 0.85?) then (是)
+    :交叉操作（顺序交叉OX）;
+    note right
+      父代1: [1 2 3 4 5 6 7 8]
+      父代2: [3 7 5 1 8 2 6 4]
+
+      选择片段 [2:5]: 2 3 4
+      子代: [1 2 3 4 5 ? ? ?]
+
+      从父代2填充:
+      子代: [1 2 3 4 5 8 2 6]
+    end note
+  else (否)
+    :复制父代1;
+  endif
+
+  if (随机数 < 0.5?) then (是)
+    :交换变异;
+    note right
+      随机选择两个位置
+      交换城市位置
+
+      [1 2 3 4 5 6]
+           ↕
+      [1 5 3 4 2 6]
+    end note
+  else (否)
+    :逆转变异;
+    note right
+      随机选择一段
+      反转路径片段
+
+      [1 2 3 4 5 6]
+           ↓
+      [1 4 3 2 5 6]
+    end note
+  endif
+
+  :验证子代有效性;
+
+  if (子代有效?) then (是)
+    :加入新种群;
+  else (否)
+    :使用父代替代;
+  endif
+
+repeat while (新种群 < n?) is (是)
+->否;
+
+:输出：新的n条路径;
+
+stop
+
+@enduml

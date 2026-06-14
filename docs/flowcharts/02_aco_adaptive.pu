@@ -1,0 +1,55 @@
+@startuml ACO+自适应参数流程图
+title ACO + 自适应参数调整流程
+
+skinparam backgroundColor #FEFEFE
+skinparam activityBackgroundColor #E8F4FD
+skinparam activityBorderColor #4A90D9
+skinparam activityDiamondBackgroundColor #FFE4B5
+skinparam activityDiamondBorderColor #DAA520
+
+start
+
+:初始化参数;
+note right
+  初始值：
+  • α = 0.5
+  • β = 3.5
+  • ρ = 0.5
+  • Q = 100
+end note
+
+:iteration = 1;
+
+repeat
+
+  #LightBlue:自适应参数调整;
+  note right
+    ratio = iter / max_iter
+    α = 0.5 + 1.5 × ratio
+    β = 3.5 - 2.0 × ratio
+    ─────────────────
+    前期：α小、β大（探索）
+    后期：α大、β小（利用）
+  end note
+
+  :蚁群构建路径（使用新α, β）;
+
+  if (当前最优 < 全局最优?) then (是)
+    :更新全局最优解;
+  else (否)
+  endif
+
+  :信息素更新;
+
+  :记录收敛数据;
+
+  :iteration++;
+
+repeat while (iteration < max_iter?) is (是)
+->否;
+
+:输出结果;
+
+stop
+
+@enduml

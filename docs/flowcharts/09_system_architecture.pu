@@ -1,0 +1,66 @@
+@startuml 系统架构流程图
+title 混合蚁群算法系统架构
+
+skinparam backgroundColor #FEFEFE
+skinparam defaultFontSize 11
+skinparam packageBackgroundColor #F0F8FF
+skinparam packageBorderColor #4A90D9
+skinparam componentBackgroundColor #E8F8E8
+skinparam componentBorderColor #2E8B57
+
+package "用户界面层 (PyQt5)" {
+  [参数输入控件] as UI1
+  [可视化图表] as UI2
+  [结果展示] as UI3
+  [导出功能] as UI4
+}
+
+package "业务逻辑层" {
+  package "核心算法" {
+    [蚁群算法 ACO] as ACO
+    [遗传算法 GA] as GA
+    [2-opt优化] as OPT
+  }
+
+  package "辅助模块" {
+    [自适应参数] as ADAPT
+    [精英策略] as ELITE
+    [性能分析] as PERF
+  }
+}
+
+package "数据层" {
+  [城市数据] as DATA1
+  [距离矩阵] as DATA2
+  [信息素矩阵] as DATA3
+  [结果记录] as DATA4
+}
+
+package "工具层" {
+  [城市生成器] as TOOL1
+  [结果导出器] as TOOL2
+  [参数预设] as TOOL3
+}
+
+' 连接关系
+UI1 --> ACO : 参数
+UI2 --> PERF : 数据
+UI3 --> DATA4 : 读取
+UI4 --> TOOL2 : 导出
+
+ACO --> GA : 路径增强
+ACO --> OPT : 局部优化
+ACO --> ADAPT : 参数调整
+ACO --> ELITE : 精英选择
+
+ACO --> DATA2 : 读取
+ACO --> DATA3 : 读写
+ACO --> DATA4 : 写入
+
+GA --> DATA2 : 计算距离
+OPT --> DATA2 : 计算距离
+
+TOOL1 --> DATA1 : 生成
+TOOL3 --> ACO : 配置
+
+@enduml

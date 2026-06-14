@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "../ai-project"
+		},
+		{
+			"path": "."
+		},
+		{
+			"path": "../../Downloads"
+		},
+		{
+			"path": "../project"
+		}
+	],
+	"settings": {}
+}

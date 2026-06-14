@@ -1,0 +1,85 @@
+@startuml
+skinparam backgroundColor white
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam activity {
+  BackgroundColor #F8FBFF
+  BorderColor #4A6FA5
+  DiamondBackgroundColor #FFF7E6
+  DiamondBorderColor #C98A2E
+  StartColor #6CBF84
+  EndColor #D96C6C
+  BarColor #4A6FA5
+}
+
+title Program Flow of ACO-based TSP Solver
+
+start
+:Run `main.py`;
+:Create Tk root window;
+:Initialize `AntColonyGUI`;
+:Display parameter area, buttons,\nresult box, and canvas;
+
+while (Application still running?) is (yes)
+  :Wait for user action;
+
+  if (Click "Generate Map"?) then (yes)
+    :Read city count;
+    if (City count < 2?) then (yes)
+      :Show validation error;
+    else (no)
+      :Call `generate_cities(n_cities)`;
+      :Store coordinates in `self.cities`;
+      :Draw city scatter plot;
+      :Show ready-to-run message;
+    endif
+  else (no)
+  endif
+
+  if (Click "Run Algorithm"?) then (yes)
+    :Read city count, ant count,\nalpha, beta, rho, q, and max_iter;
+    if (City count < 2\nor ant count < 1?) then (yes)
+      :Show validation error;
+    else (no)
+      if (`self.cities` missing\nor city count changed?) then (yes)
+        :Generate new city coordinates;
+      else (no)
+        :Reuse current map;
+      endif
+
+      :Initialize `AntColonyTSP`;
+      :Build distance matrix;
+      :Initialize pheromone matrix;
+
+      repeat
+        :Construct a route for each ant;
+        repeat
+          :Select next city using pheromone\nand heuristic weights;
+        repeat while (Unvisited cities remain?) is (yes)
+
+        :Return to start city;
+        :Compute total route distance;
+        if (Current route better than global best?) then (yes)
+          :Update best path and best distance;
+        else (no)
+        endif
+
+        :After all ants finish,\nevaporate and reinforce pheromone;
+        :Record iteration best distance;
+      repeat while (Maximum iteration reached?) is (no)
+
+      :Compute running time;
+      :Compute convergence iteration;
+      :Return result dictionary;
+      :Update text results;
+      :Plot best route;
+      :Plot convergence curve;
+      :Refresh canvas;
+    endif
+  else (no)
+  endif
+endwhile (no)
+
+stop
+
+@enduml

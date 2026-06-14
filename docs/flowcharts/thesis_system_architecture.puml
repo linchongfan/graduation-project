@@ -1,0 +1,53 @@
+@startuml
+
+skinparam backgroundColor white
+skinparam defaultFontName Microsoft YaHei
+skinparam defaultFontSize 14
+skinparam shadowing false
+skinparam packageStyle rectangle
+skinparam packageBorderColor #4C78A8
+skinparam packageBackgroundColor #F7FBFF
+skinparam componentStyle rectangle
+skinparam componentBorderColor #4C78A8
+skinparam componentBackgroundColor #EAF2FB
+skinparam ArrowColor #666666
+
+package "用户界面层" as UI {
+  component "参数设置面板" as UI1
+  component "可视化图表" as UI2
+  component "结果显示区域" as UI3
+  component "控制按钮" as UI4
+}
+
+package "算法核心层" as CORE {
+  component "蚁群优化器" as ACO
+  component "遗传增强模块" as GA
+  component "2-opt优化模块" as OPT
+  component "自适应参数调整模块" as ADAPT
+}
+
+package "基础服务层" as BASE {
+  component "城市生成器" as CITY
+  component "距离计算器" as DIST
+  component "信息素管理器" as PHER
+  component "结果导出器" as EXPORT
+}
+
+UI1 --> ACO : 参数配置
+UI2 --> ACO : 运行状态展示
+UI3 --> ACO : 结果读取
+UI4 --> ACO : 启动/停止控制
+
+ACO --> GA : 路径增强
+ACO --> OPT : 局部优化
+ACO --> ADAPT : 动态调参
+
+ACO --> DIST : 读取距离矩阵
+ACO --> PHER : 更新信息素
+GA --> DIST : 适应度计算
+OPT --> DIST : 路径长度计算
+
+CITY --> DIST : 城市坐标
+ACO --> EXPORT : 导出结果
+
+@enduml

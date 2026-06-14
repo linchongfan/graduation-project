@@ -1,0 +1,29 @@
+﻿@startuml
+
+skinparam backgroundColor white
+skinparam defaultFontName Microsoft YaHei
+skinparam defaultFontSize 14
+skinparam shadowing false
+skinparam ArrowColor #666666
+skinparam activity {
+  BackgroundColor #EAF2FB
+  BorderColor #4C78A8
+  DiamondBackgroundColor #FFF2CC
+  DiamondBorderColor #C27D38
+  RoundCorner 18
+}
+
+start
+
+:初始化参数与信息素;
+
+while (继续迭代?) is (是)
+  :按概率构建路径;
+  :计算路径并更新最优解;
+  :更新信息素;
+endwhile (否)
+
+:输出最优路径;
+stop
+
+@enduml

@@ -1,0 +1,33 @@
+@startuml
+
+skinparam backgroundColor white
+skinparam defaultFontName Microsoft YaHei
+skinparam defaultFontSize 14
+skinparam shadowing false
+skinparam activityBorderColor #4C78A8
+skinparam activityBackgroundColor #EAF2FB
+skinparam diamondBorderColor #C27D38
+skinparam diamondBackgroundColor #FFF2CC
+skinparam ArrowColor #666666
+
+start
+
+:选取待优化路径;
+:枚举不相邻边对;
+:计算反转后的距离变化量 ΔL;
+
+if (ΔL < 0 ?) then (是)
+  :执行路径片段反转;
+  -> 返回枚举边对
+else (否)
+  :继续检查下一组边对;
+endif
+
+if (仍可改进?) then (是)
+  -> 返回枚举边对
+else (否)
+  :输出优化后的路径;
+  stop
+endif
+
+@enduml

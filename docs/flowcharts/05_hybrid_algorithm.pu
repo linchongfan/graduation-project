@@ -1,0 +1,135 @@
+@startuml 混合蚁群算法完整流程图
+title 混合蚁群算法（ACO + 自适应 + GA + 2-opt）完整流程
+
+skinparam backgroundColor #FEFEFE
+skinparam defaultFontSize 12
+skinparam activityBackgroundColor #E8F4FD
+skinparam activityBorderColor #4A90D9
+skinparam activityDiamondBackgroundColor #FFE4B5
+skinparam activityDiamondBorderColor #DAA520
+skinparam noteBackgroundColor #FFFACD
+skinparam noteBorderColor #DAA520
+
+|#LightBlue|初始化|
+start
+
+:配置算法参数;
+note right
+  **蚁群参数**
+  • ant_count = 50
+  • α_init = 0.8
+  • β_init = 3.5
+  • ρ = 0.5
+  • Q = 100
+  • max_iter = 100
+  ───────────────
+  **遗传算法参数**
+  • crossover_rate = 0.85
+  • mutation_rate = 0.15
+  • elite_ratio = 0.1
+  ───────────────
+  **优化选项**
+  • adaptive_params = True
+  • use_ga = True
+  • use_2opt = True
+end note
+
+:生成城市坐标;
+:计算距离矩阵;
+:初始化信息素矩阵（全1）;
+
+|#E8F8E8|主循环|
+:iteration = 1;
+
+repeat
+
+  detach
+
+  #LightBlue:① 自适应参数调整;
+  note right
+    ratio = iter / max_iter
+
+    **α变化：**
+    0.5 ──────────────→ 2.0
+    (探索)     →     (利用)
+
+    **β变化：**
+    3.5 ──────────────→ 1.5
+    (贪心)     →     (多元化)
+  end note
+
+  :② 蚁群构建路径;
+  note right
+    使用更新后的 α, β
+    每只蚂蚁构建一条完整路径
+    共生成 ant_count 条路径
+  end note
+
+  #LightGreen:③ 遗传算法增强;
+  note right
+    **选择：**
+    锦标赛选择（规模=3）
+
+    **交叉：**
+    顺序交叉（OX）
+
+    **变异：**
+    交换变异 / 逆转变异
+
+    **精英保留：**
+    前25%直接进入下一代
+  end note
+
+  #LightYellow:④ 2-opt局部搜索;
+  note right
+    对精英蚂蚁（前10%）：
+
+    while(有改善):
+      for i, j:
+        if new_dist < old_dist:
+          反转路径片段
+
+    优化效果：距离↓ 5-8%
+  end note
+
+  #LightCoral:⑤ 精英信息素更新;
+  note right
+    1. 信息素挥发
+       τ = (1-ρ) × τ
+
+    2. 精英蚂蚁强化
+       精英释放2倍信息素
+
+    3. 限制浓度范围
+       [0.01, 100]
+  end note
+
+  :⑥ 更新全局最优解;
+  :⑦ 记录收敛数据;
+
+  :iteration++;
+
+repeat while (iteration < max_iter?) is (是)
+->否;
+
+|#FFE4E1|输出结果|
+
+:计算收敛指标;
+note right
+  • 收敛迭代次数
+  • 首次迭代距离
+  • 最后下降迭代
+end note
+
+:可视化展示;
+note right
+  左图：最优路径
+  右图：收敛曲线
+  （标记下降点）
+end note
+
+:导出结果;
+
+stop
+
+@enduml

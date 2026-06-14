@@ -1,0 +1,58 @@
+@startuml 基本蚁群算法流程图
+title 基本蚁群算法（ACO）求解TSP流程
+
+start
+
+:初始化参数;
+note right
+  • 城市坐标
+  • 距离矩阵
+  • 信息素矩阵（全1）
+  • α, β, ρ, Q
+end note
+
+:iteration = 1;
+
+repeat
+
+  :蚁群构建路径;
+  note right
+    每只蚂蚁：
+    1. 随机选择起始城市
+    2. 根据概率选择下一个城市
+       P(i→j) = [τ(i,j)]^α × [η(i,j)]^β
+    3. 重复直到访问所有城市
+    4. 返回起始城市
+  end note
+
+  :计算每条路径的距离;
+
+  if (当前最优 < 全局最优?) then (是)
+    :更新全局最优解;
+  else (否)
+  endif
+
+  :信息素更新;
+  note right
+    1. 挥发：τ(i,j) = (1-ρ) × τ(i,j)
+    2. 强化：τ(i,j) = τ(i,j) + Q/L_k
+  end note
+
+  :记录收敛数据;
+
+  :iteration++;
+
+repeat while (iteration < max_iter?) is (是)
+->否;
+
+:输出结果;
+note right
+  • 最优路径
+  • 最优距离
+  • 运行时间
+  • 收敛迭代次数
+end note
+
+stop
+
+@enduml

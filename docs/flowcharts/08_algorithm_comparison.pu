@@ -1,0 +1,71 @@
+@startuml 算法对比流程图
+title 五种算法配置对比
+
+skinparam backgroundColor #FEFEFE
+skinparam defaultFontSize 10
+skinparam activityBackgroundColor #E8F4FD
+skinparam activityBorderColor #4A90D9
+
+|基本ACO|
+start
+:蚁群构建路径;
+:信息素更新;
+:输出结果;
+
+|ACO+自适应|
+:蚁群构建路径;
+note right
+  α: 0.5→2.0
+  β: 3.5→1.5
+end note
+:信息素更新;
+:输出结果;
+
+|ACO+遗传算法|
+:蚁群构建路径;
+note right
+  选择 → 交叉 → 变异
+  精英保留25%
+end note
+:信息素更新;
+:输出结果;
+
+|ACO+2-opt|
+:蚁群构建路径;
+note right
+  对精英路径
+  反转消除交叉
+end note
+:信息素更新;
+:输出结果;
+
+|混合算法|
+:蚁群构建路径;
+note right
+  自适应参数
+  遗传算法增强
+  2-opt优化
+  精英信息素更新
+end note
+:信息素更新;
+:输出结果;
+
+|#FFE4E1|结果对比|
+:收集所有结果;
+:生成对比表格;
+note right
+  ┌─────────┬──────┬──────┬──────┐
+  │ 算法    │ 距离 │ 时间 │ 迭代 │
+  ├─────────┼──────┼──────┼──────┤
+  │ 基本ACO │ 578  │ 6.9s │ 3.7  │
+  │ +自适应 │ 565  │ 7.0s │ 3.5  │
+  │ +GA     │ 550  │ 10s  │ 4.0  │
+  │ +2-opt  │ 542  │ 8s   │ 3.2  │
+  │ 混合    │ 525  │ 12s  │ 3.0  │
+  └─────────┴──────┴──────┴──────┘
+end note
+:可视化对比图;
+
+stop
+
+@enduml
