@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# IDE
+*.code-workspace
+.vscode/
+.idea/
+
+# Documents
+*.docx
+*.doc
+*.pptx
+*.ppt
+*.xlsx
+*.xls
+*.pdf
+
+# Data & output
+data/
+output/
+artifacts/
+backup/
+
+# Images
+images/
+docs/
+
+# Temp files
+~$*
+*.tmp
+*.log
+
+# Tools
+tools/
+
+# Misc
+*.txt
+*.jar
+*.json
