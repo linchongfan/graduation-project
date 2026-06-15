@@ -102,10 +102,7 @@ python src/hybrid_aco.py
 
 ```
 ├── src/
-│   ├── hybrid_aco.py      # 混合算法主程序
-│   ├── main.py            # 基本蚁群算法（原版）
-│   ├── hybrid_aco_backup.py
-│   └── flowchart_2opt.py
+│   └── hybrid_aco.py      # 混合算法主程序
 └── README.md              # 本说明文件
 ```
 
